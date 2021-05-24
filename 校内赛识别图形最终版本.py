@@ -11,10 +11,8 @@ def detectShape(img):
     # 循环轮廓，判断每一个形状
     global count
     global objectType
-    global objCor
     count = 0
     objectType = None
-    objCor = 0
     for cnt in contours:
         # 获取轮廓面积
         area = cv.contourArea(cnt)
@@ -63,6 +61,8 @@ cap = cv.VideoCapture(0, cv.CAP_DSHOW)
 while True:
     # 从摄像头读取图片
     success, img = cap.read()
+    # 转换大小
+    img = cv.resize(img, (1280, 720))
     # 灰度化
     imgGray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     # 高斯平滑
