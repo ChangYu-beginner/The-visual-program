@@ -62,7 +62,7 @@ while True:
     # 从摄像头读取图片
     success, img = cap.read()
     # 转换大小
-    img = cv.resize(img, (1280, 720))
+    img = cv.resize(img, (1000, 700))
     # 灰度化
     imgGray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     # 高斯平滑
