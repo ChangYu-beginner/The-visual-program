@@ -51,43 +51,57 @@ def detectShape(img):
                 count += 1
             # 绘制文本时需要绘制在图形附件
             cv.rectangle(imgContour, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            cv.putText(imgContour, objectType,
-                       (x + (w // 2) - 10, y + (h // 2) - 10), cv.FONT_HERSHEY_COMPLEX, 0.7,
-                       (0, 0, 0), 2)
+            cv.putText(
+                imgContour,
+                objectType,
+                (x + (w // 2) - 10, y + (h // 2) - 10),
+                cv.FONT_HERSHEY_COMPLEX,
+                0.7,
+                (0, 0, 0),
+                2,
+            )
 
 
-# 调用笔记本内置摄像头，所以参数为0，官方摄像头为1
-cap = cv.VideoCapture(0, cv.CAP_DSHOW)
-while True:
-    # 从摄像头读取图片
-    success, img = cap.read()
-    # 转换大小
-    img = cv.resize(img, (1000, 700))
-    # 灰度化
-    imgGray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-    # 高斯平滑
-    imgBlur = cv.GaussianBlur(imgGray, (7, 7), 1)
-    # 边缘检测
-    imgCanny = cv.Canny(imgBlur, 200, 200)
-    # 膨胀
-    kernel = cv.getStructuringElement(cv.MORPH_RECT, (2, 2))
-    swell = cv.dilate(imgCanny, kernel=kernel)
-    # 调用检测函数
-    imgContour = img.copy()
-    detectShape(swell)
-    # 绘制文本
-    cv.putText(imgContour, "%s,%d" % (objectType, count), (10, 50), cv.FONT_HERSHEY_PLAIN, 2.0,
-               (0, 0, 0), 2)
-    # 若参数delay≤0：表示一直等待按键；
-    # 若delay取正整数：表示等待按键的时间，比如cv2.waitKey(100)，就是等待100毫秒
-    k = cv.waitKey(100)
-    # 保持画面的持续。
-    cv.imshow("img", imgContour)
-    if k == 27:
-        # 通过esc键退出摄像
-        cv.destroyAllWindows()
-        break
+if __name__ == "__main__":
+    # 调用笔记本内置摄像头，所以参数为0，官方摄像头为1
+    cap = cv.VideoCapture(0, cv.CAP_DSHOW)
+    while True:
+        # 从摄像头读取图片
+        success, img = cap.read()
+        # 转换大小
+        img = cv.resize(img, (1000, 700))
+        # 灰度化
+        imgGray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+        # 高斯平滑
+        imgBlur = cv.GaussianBlur(imgGray, (7, 7), 1)
+        # 边缘检测
+        imgCanny = cv.Canny(imgBlur, 200, 200)
+        # 膨胀
+        kernel = cv.getStructuringElement(cv.MORPH_RECT, (2, 2))
+        swell = cv.dilate(imgCanny, kernel=kernel)
+        # 调用检测函数
+        imgContour = img.copy()
+        detectShape(swell)
+        # 绘制文本
+        cv.putText(
+            imgContour,
+            "%s,%d" % (objectType, count),
+            (10, 50),
+            cv.FONT_HERSHEY_PLAIN,
+            2.0,
+            (0, 0, 0),
+            2,
+        )
+        # 若参数delay≤0：表示一直等待按键；
+        # 若delay取正整数：表示等待按键的时间，比如cv2.waitKey(100)，就是等待100毫秒
+        k = cv.waitKey(100)
+        # 保持画面的持续。
+        cv.imshow("img", imgContour)
+        if k == 27:
+            # 通过esc键退出摄像
+            cv.destroyAllWindows()
+            break
 
-# 关闭摄像头
-cap.release()
-cv.destroyAllWindows()
+    # 关闭摄像头
+    cap.release()
+    cv.destroyAllWindows()
