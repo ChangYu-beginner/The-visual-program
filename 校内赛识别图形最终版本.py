@@ -5,6 +5,11 @@
 import cv2 as cv
 
 
+"""
+测试代码
+"""
+
+
 def detectShape(img):
     # 查找轮廓，cv2.RETR_ExTERNAL=获取外部轮廓点, CHAIN_APPROX_NONE = 得到所有的像素点
     contours, hierarchy = cv.findContours(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
@@ -51,9 +56,15 @@ def detectShape(img):
                 count += 1
             # 绘制文本时需要绘制在图形附件
             cv.rectangle(imgContour, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            cv.putText(imgContour, objectType,
-                       (x + (w // 2) - 10, y + (h // 2) - 10), cv.FONT_HERSHEY_COMPLEX, 0.7,
-                       (0, 0, 0), 2)
+            cv.putText(
+                imgContour,
+                objectType,
+                (x + (w // 2) - 10, y + (h // 2) - 10),
+                cv.FONT_HERSHEY_COMPLEX,
+                0.7,
+                (0, 0, 0),
+                2,
+            )
 
 
 # 调用笔记本内置摄像头，所以参数为0，官方摄像头为1
@@ -76,8 +87,15 @@ while True:
     imgContour = img.copy()
     detectShape(swell)
     # 绘制文本
-    cv.putText(imgContour, "%s,%d" % (objectType, count), (10, 50), cv.FONT_HERSHEY_PLAIN, 2.0,
-               (0, 0, 0), 2)
+    cv.putText(
+        imgContour,
+        "%s,%d" % (objectType, count),
+        (10, 50),
+        cv.FONT_HERSHEY_PLAIN,
+        2.0,
+        (0, 0, 0),
+        2,
+    )
     # 若参数delay≤0：表示一直等待按键；
     # 若delay取正整数：表示等待按键的时间，比如cv2.waitKey(100)，就是等待100毫秒
     k = cv.waitKey(100)
