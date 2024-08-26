@@ -5,6 +5,7 @@
 import cv2 as cv
 
 
+# 查找形状
 def detectShape(img):
     # 查找轮廓，cv2.RETR_ExTERNAL=获取外部轮廓点, CHAIN_APPROX_NONE = 得到所有的像素点
     contours, hierarchy = cv.findContours(img, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
